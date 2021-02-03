@@ -16,7 +16,7 @@
     "vscode": "^1.52.0"
   },
   "categories": [
-    "Testing"
+    "Other"
   ],
   "activationEvents": [
     "onStartupFinished"
