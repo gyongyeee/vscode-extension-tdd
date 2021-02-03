@@ -5,6 +5,13 @@
   "description": "TDD workspace file tracker and utility.",
   "icon": "images/logo.png",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amaury95/vscode-extension-tdd"
+  },
+  "author": {
+    "name": "Amaury Diaz"
+  },
   "engines": {
     "vscode": "^1.52.0"
   },
