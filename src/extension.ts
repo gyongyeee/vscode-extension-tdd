@@ -27,18 +27,32 @@ export function activate(context: vscode.ExtensionContext) {
     }
   });
 
-  vscode.workspace.onWillRenameFiles(async ({ files }) => {
-    await Promise.all(
-      files.map(async ({ newUri, oldUri }) => {
-        if (utils.getFileData(oldUri).isCode) {
-          const oldtest = utils.getTestFile(oldUri);
-          const newtest = utils.getTestFile(newUri);
+  vscode.workspace.onWillRenameFiles(
+    async ({ files }) =>
+      await Promise.all(
+        files.map(async ({ newUri, oldUri }) => {
+          if (utils.getFileData(oldUri).isCode) {
+            const oldtest = utils.getTestFile(oldUri);
+            const newtest = utils.getTestFile(newUri);
 
-          return utils.renameFile(oldtest, newtest);
-        }
-      })
-    );
-  });
+            return utils.renameFile(oldtest, newtest);
+          }
+        })
+      )
+  );
+
+  vscode.workspace.onWillDeleteFiles(
+    async ({ files }) =>
+      await Promise.all(
+        files.map(async (file) => {
+          if (utils.getFileData(file).isCode) {
+            const testfile = utils.getTestFile(file);
+
+            return utils.deleteFile(testfile);
+          }
+        })
+      )
+  );
 }
 
 export function deactivate() {}
