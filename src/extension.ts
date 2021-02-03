@@ -1,27 +1,58 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import * as utils from "./utils";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  console.log("TDD Extension is now active!");
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "tdd" is now active!');
+  vscode.window.onDidChangeActiveTextEditor(async (data) => {
+    if (data) {
+      const { uri } = data.document;
+      const { isCode } = utils.getFileData(uri);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('tdd.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
+      if (isCode) {
+        const file = utils.getTestFile(uri);
+        await utils.createFile(file);
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from tdd!');
-	});
+        vscode.window.showTextDocument(file, {
+          viewColumn: vscode.ViewColumn.Two,
+          preserveFocus: true,
+        });
 
-	context.subscriptions.push(disposable);
+        if (data.viewColumn === vscode.ViewColumn.Two) {
+          vscode.window.showTextDocument(uri, {
+            viewColumn: vscode.ViewColumn.One,
+            preserveFocus: true,
+          });
+        }
+      }
+    }
+  });
+
+  vscode.workspace.onWillRenameFiles(async ({ files }) => {
+    await Promise.all(
+      files.map(async ({ newUri, oldUri }) => {
+        const { isCode } = utils.getFileData(oldUri);
+        if (isCode) {
+          const oldtest = utils.getTestFile(oldUri);
+          const newtest = utils.getTestFile(newUri);
+
+          return utils.renameFile(oldtest, newtest);
+        }
+      })
+    );
+  });
+
+  // vscode.workspace.onWillDeleteFiles(async ({ files }) => {
+  //   await Promise.all(
+  //     files.map(async (file) => {
+  //       if (utils.isCodeFile(file)) {
+  //         const testfile = utils.getTestFile(file);
+
+  //         await utils.deleteFile(testfile, wsedit);
+  //       }
+  //     })
+  //   );
+  // });
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {}
