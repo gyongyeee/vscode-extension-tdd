@@ -1,13 +1,15 @@
 {
   "name": "tdd",
-  "displayName": "tdd",
-  "description": "Test Driven Development generator and validator",
+  "publisher": "amauryuh",
+  "displayName": "TDD",
+  "description": "TDD workspace file tracker and utility.",
+  "icon": "images/logo.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.52.0"
   },
   "categories": [
-    "Other"
+    "Testing"
   ],
   "activationEvents": [
     "onStartupFinished"
