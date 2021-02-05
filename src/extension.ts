@@ -8,8 +8,9 @@ export function activate(context: vscode.ExtensionContext) {
     if (data) {
       const { uri: file } = data.document;
 
-      if (utils.getFileData(file).isCode) {
-        const testfile = utils.getTestFile(file);
+      const suite = utils.getTestSuite(file);
+      if (suite) {
+        const testfile = suite.getTestFile(file);
         await utils.createFile(testfile);
 
         vscode.window.showTextDocument(testfile, {
@@ -31,9 +32,10 @@ export function activate(context: vscode.ExtensionContext) {
     async ({ files }) =>
       await Promise.all(
         files.map(async ({ newUri, oldUri }) => {
-          if (utils.getFileData(oldUri).isCode) {
-            const oldtest = utils.getTestFile(oldUri);
-            const newtest = utils.getTestFile(newUri);
+          const suite = utils.getTestSuite(oldUri);
+          if (suite) {
+            const oldtest = suite.getTestFile(oldUri);
+            const newtest = suite.getTestFile(newUri);
 
             return utils.renameFile(oldtest, newtest);
           }
@@ -45,8 +47,9 @@ export function activate(context: vscode.ExtensionContext) {
     async ({ files }) =>
       await Promise.all(
         files.map(async (file) => {
-          if (utils.getFileData(file).isCode) {
-            const testfile = utils.getTestFile(file);
+          const suite = utils.getTestSuite(file);
+          if (suite) {
+            const testfile = suite.getTestFile(file);
 
             return utils.deleteFile(testfile);
           }

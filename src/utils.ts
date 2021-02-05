@@ -1,47 +1,21 @@
 import * as vscode from "vscode";
 import * as _ from "lodash";
-import { Utils } from "vscode-uri";
+import JavaScript from "./envs/env_js";
+import TestSuite from "./interface";
 
 const validExtensions = [".ts", ".js", ".tsx", ".jsx"];
 const testNames = ["specs", "test"];
 const testLocations = ["__tests__", "__mocks__"];
 
-export function getFileData(file: vscode.Uri) {
-  const location = Utils.dirname(file).path;
-  const extension = Utils.extname(file);
-  const filename = Utils.basename(file).replace(extension, "");
+const _testSuites = [new JavaScript()];
 
-  const middlename = _.last(_.split(filename, "."));
-
-  const validExtension = validExtensions.some((p) => extension === p);
-  const testName = testNames.some((p) => middlename === p);
-  const insideTestFolder = testLocations.some((p) => location.includes(p));
-
-  const isCode = validExtension && !(testName || insideTestFolder);
-  const isTest = validExtension && (testName || insideTestFolder);
-
-  return {
-    location,
-    filename,
-    extension,
-    middlename,
-    isCode,
-    isTest,
-  };
-}
-
-export function getCodeFile(file: vscode.Uri): vscode.Uri {
-  const { middlename } = getFileData(file);
-  return vscode.Uri.file(
-    file.path.replace(`.${middlename}.`, ".").replace("/__tests__/", "/")
-  );
-}
-
-export function getTestFile(file: vscode.Uri): vscode.Uri {
-  const { location, filename, extension } = getFileData(file);
-  return vscode.Uri.file(
-    location + "/__tests__/" + filename + ".test" + extension
-  );
+export function getTestSuite(file: vscode.Uri): TestSuite | null {
+  for (const suite of _testSuites) {
+    if (suite.isCodeFile(file)) {
+      return suite;
+    }
+  }
+  return null;
 }
 
 export function createFile(file: vscode.Uri) {
