@@ -7,7 +7,7 @@ export interface Matcher {
 }
 
 export default interface TestSuite {
-  isSet(): boolean;
+  isSet(context: vscode.ExtensionContext): boolean;
 
   isCodeFile(file: vscode.Uri): boolean;
 

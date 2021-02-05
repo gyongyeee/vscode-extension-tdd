@@ -4,7 +4,7 @@
   "displayName": "TDD",
   "description": "TDD workspace file tracker and utility.",
   "icon": "images/logo.png",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/amaury95/vscode-extension-tdd"

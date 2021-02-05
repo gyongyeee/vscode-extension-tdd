@@ -1,16 +1,12 @@
 import * as vscode from "vscode";
 import * as _ from "lodash";
-import Jest from "./envs/jest";
 import TestSuite from "./interface";
 
-const validExtensions = [".ts", ".js", ".tsx", ".jsx"];
-const testNames = ["specs", "test"];
-const testLocations = ["__tests__", "__mocks__"];
-
-const _testSuites = [new Jest()];
-
-export function getTestSuite(file: vscode.Uri): TestSuite | null {
-  for (const suite of _testSuites) {
+export function getTestSuite(
+  file: vscode.Uri,
+  ...suites: TestSuite[]
+): TestSuite | null {
+  for (const suite of suites) {
     if (suite.isCodeFile(file)) {
       return suite;
     }
