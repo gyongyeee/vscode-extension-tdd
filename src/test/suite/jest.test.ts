@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import * as vscode from "vscode";
 
-import Jest from "../../envs/jest";
+import Jest from "../../suites/jest";
 
 suite("Jest Env Test Suite", () => {
   const jest = new Jest();

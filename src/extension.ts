@@ -1,11 +1,9 @@
 import * as vscode from "vscode";
-import Jest from "./envs/jest";
 import * as utils from "./utils";
-
-const _testSuites = [new Jest()];
+import testSuites from "./suites";
 
 export function activate(context: vscode.ExtensionContext) {
-  const suites = () => _testSuites.filter((s) => s.isSet(context));
+  const suites = () => testSuites.filter((s) => s.isSet(context));
 
   const testSide = () => vscode.ViewColumn.Two;
   const codeSide = () =>

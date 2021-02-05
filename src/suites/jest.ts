@@ -7,7 +7,7 @@ import TestSuite from "../interface";
 export default class Jest implements TestSuite {
   private _allowedExtensions = [".ts", ".js", ".tsx", ".jsx"];
   private _testNameIndicator = [".test.", ".spec."];
-  private _testFolderIndicator = ["__tests__", "__mocks__"];
+  private _excludeIndicator = ["__tests__", "__mocks__"];
 
   isSet(context: vscode.ExtensionContext): boolean {
     return true;
@@ -26,7 +26,7 @@ export default class Jest implements TestSuite {
     }
 
     const location = Utils.dirname(file);
-    if (_.some(this._testFolderIndicator, (p) => location.path.includes(p))) {
+    if (_.some(this._excludeIndicator, (p) => location.path.includes(p))) {
       return false;
     }
 
