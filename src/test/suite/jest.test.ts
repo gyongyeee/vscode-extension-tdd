@@ -44,7 +44,7 @@ suite("Jest Env Test Suite", () => {
     );
 
     validFiles.forEach((file, i) =>
-      assert.strictEqual(jest.getTestFile(file).path, validFilesTests[i].path)
+      assert.strictEqual(jest.testFileUri(file).path, validFilesTests[i].path)
     );
   });
 });

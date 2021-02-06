@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       const suite = utils.getTestSuite(file, ...suites());
       if (suite) {
-        const testfile = suite.getTestFile(file);
+        const testfile = suite.testFileUri(file);
         await utils.createFile(testfile);
 
         const testColumn = testSide();
@@ -44,8 +44,8 @@ export function activate(context: vscode.ExtensionContext) {
         files.map(async ({ newUri, oldUri }) => {
           const suite = utils.getTestSuite(oldUri, ...suites());
           if (suite) {
-            const oldtest = suite.getTestFile(oldUri);
-            const newtest = suite.getTestFile(newUri);
+            const oldtest = suite.testFileUri(oldUri);
+            const newtest = suite.testFileUri(newUri);
 
             return utils.renameFile(oldtest, newtest);
           }
@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
         files.map(async (file) => {
           const suite = utils.getTestSuite(file, ...suites());
           if (suite) {
-            const testfile = suite.getTestFile(file);
+            const testfile = suite.testFileUri(file);
 
             return utils.deleteFile(testfile);
           }
