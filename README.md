@@ -1,6 +1,6 @@
-# TDD Code Extension
+# TDD Zen
 
-TDD is a simple extension for keep in the screen code files and it's corresponding test files.
+TDD Zen is a simple extension for keep in the screen code files and it's corresponding test files.
 
 ## Features
 

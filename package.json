@@ -1,8 +1,8 @@
 {
-  "name": "tdd",
+  "name": "tdd-zen",
   "publisher": "amaury95",
-  "displayName": "TDD",
-  "description": "TDD workspace file tracker and utility.",
+  "displayName": "TDD Zen",
+  "description": "TDD mode where you can have both code and test code right on your screen automatically",
   "icon": "images/logo.png",
   "version": "0.2.3",
   "repository": {
