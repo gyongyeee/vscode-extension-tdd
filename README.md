@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/amaury95/vscode-extension-tdd)
+
 # TDD Zen
 
 TDD Zen is a simple extension for keep in the screen code files and it's corresponding test files.
